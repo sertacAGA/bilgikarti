@@ -1,9 +1,9 @@
-// Kart Veri Yapısı: Tüm 26 kartınız buraya eklenecek.
-// Resim yollarının "images/" klasörünü içerdiğine dikkat edin.
+// Kart Veri Yapısı
+// DİKKAT: Resimlerinizi 'images' klasörüne koyun ve uzantılarını (.jpg veya .png) doğru yazın.
 const quizCards = [
     {
         question: "Salyangozlar genellikle yağmurdan sonra neden dışarı çıkarlar?",
-        image: "images/01.jpg", // Resim dosya yolu
+        image: "images/01.jpg", // Resim adınızın 01.jpg olduğunu varsaydık
         options: {
             A: "Nemli havalarda daha rahat hareket ederler.",
             B: "Yağmur kabuklarını parlatır.",
@@ -11,10 +11,9 @@ const quizCards = [
             D: "Güneşi çok sevdikleri için."
         },
         correctAnswer: "A", 
-        answerDetail: "Nemli havalar, salyangozların kurumadan hareket etmesi ve beslenmesi için ideal ortamı sağlar. Kuru hava onlar için tehlikelidir." // Arka yüzde görünecek açıklama
+        answerDetail: "Nemli havalar, salyangozların kurumadan hareket etmesi ve beslenmesi için ideal ortamı sağlar. Kuru hava onlar için tehlikelidir." 
     },
-    // Diğer 25 kart buraya eklenecek...
-    // { ... },
+    // Diğer kartları buraya eklemeye devam edebilirsiniz...
 ];
 
 let currentCardIndex = 0;
@@ -46,6 +45,7 @@ function startGame() {
 
     score = 0;
     currentCardIndex = 0;
+    scoreSpan.textContent = score; // Skoru görsel olarak sıfırla
     
     // Açılış ekranını gizle ve oyun alanını göster
     initialScreen.style.display = 'none'; 
@@ -95,7 +95,7 @@ function loadCard(index) {
     feedbackText.textContent = '';
     
     // Puanlama ve İlerleme Tahtasını Güncelle
-    scoreSpan.textContent = score;
+    // scoreSpan güncellemesi burada değil, puan kazanıldığında yapılır.
     cardIndexSpan.textContent = index + 1;
 }
 
@@ -111,16 +111,9 @@ function handleAnswer(event) {
     optionButtons.forEach(button => button.disabled = true);
 
     // Geri bildirim (feedback)
-// Cevap Kontrolü
-function handleAnswer(event) {
-    // ... (kodun başı aynı)
-
-    // Geri bildirim (feedback)
     if (isCorrect) {
         score++;
-        // ------------------------------------------------------------------
-        scoreSpan.textContent = score; // ✅ BU SATIRI EKLEMELİSİNİZ!
-        // ------------------------------------------------------------------
+        scoreSpan.textContent = score; // ✅ PUAN GÜNCELLEME BURADA YAPILDI
         feedbackText.textContent = 'Doğru! Puan kazandınız.';
         feedbackText.className = 'feedback-message correct';
         event.target.classList.add('correct-btn');
@@ -161,12 +154,26 @@ function showEndScreen() {
     feedbackText.textContent = `Oyun bitti! Toplam ${quizCards.length} karttan ${score} doğru cevap verdiniz.`;
     feedbackText.className = 'feedback-message correct';
     
+    // Tekrar oynama için hazırlık
     startButton.textContent = 'Tekrar Oyna';
-    startButton.style.display = 'block';
-    initialScreen.style.display = 'flex'; // Tekrar oynatmak için başlangıç ekranını göster
+    startButton.onclick = startGame; 
     
-    // Puan tahtasını sonuca göre güncelle
-    document.querySelector('.score-board').style.display = 'none'; 
+    initialScreen.style.display = 'flex'; // Başlangıç ekranını geri getir
+    
+    // Sonuç mesajını başlangıç ekranına ekleyelim (Basit bir yol)
+    // Mevcut bir mesaj varsa temizle
+    const oldMsg = document.getElementById('final-msg');
+    if(oldMsg) oldMsg.remove();
+    
+    const finalMsg = document.createElement('p');
+    finalMsg.id = 'final-msg';
+    finalMsg.style.fontWeight = 'bold';
+    finalMsg.style.fontSize = '1.2em';
+    finalMsg.style.color = '#333';
+    finalMsg.textContent = `Son Skorunuz: ${score} / ${quizCards.length}`;
+    
+    // Butondan önceye ekle
+    initialScreen.insertBefore(finalMsg, startButton);
 }
 
 // Sayfa yüklendiğinde başlangıç durumunu ayarla
