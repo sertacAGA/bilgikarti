@@ -4,7 +4,6 @@ body {
     justify-content: center;
     align-items: center; 
     min-height: 100vh;
-    /* Hafif renkli arka plan */
     background: linear-gradient(135deg, #eceff1 0%, #cfd8dc 100%);
     padding: 20px;
     margin: 0;
@@ -132,7 +131,7 @@ h1 {
 .question-text {
     font-size: 1.4em;
     font-weight: bold;
-    background-color: rgba(0, 0, 0, 0.6); /* Soru metni için yarı saydam arka planı koyulaştırdık */
+    background-color: rgba(0, 0, 0, 0.6); 
     padding: 10px 15px;
     border-radius: 8px;
     width: 90%;
@@ -160,7 +159,6 @@ h1 {
     margin-bottom: 25px;
     color: #004d40;
 }
-
 
 /* --- Düğmeler ve Mesajlar --- */
 
@@ -194,11 +192,11 @@ h1 {
 
 /* Doğru/Yanlış Renkleri */
 .option-btn.correct-btn {
-    background-color: #4CAF50 !important; /* Yeşil */
+    background-color: #4CAF50 !important; 
     color: white !important;
 }
 .option-btn.wrong-btn {
-    background-color: #F44336 !important; /* Kırmızı */
+    background-color: #F44336 !important; 
     color: white !important;
 }
 
