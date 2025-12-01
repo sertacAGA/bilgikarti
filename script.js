@@ -28,6 +28,8 @@ let score = 0;
 let isFlipping = false;
 
 // DOM Elementleri
+const cardFrontFace = document.getElementById('card-front-face');
+const initialScreen = document.getElementById('initial-screen');
 const quizCard = document.getElementById('quiz-card');
 const questionText = document.getElementById('question-text');
 const cardImage = document.getElementById('card-image');
@@ -49,12 +51,13 @@ function startGame() {
     currentCardIndex = 0;
     
     // Gerekli öğeleri göster
-    cardContainer.style.display = 'block';
-    scoreBoard.style.display = 'block';
-    startButton.style.display = 'none';
+    initialScreen.style.display = 'none'; // Açılış ekranını gizle
+    cardContainer.style.display = 'block'; // Kartı göster
+    scoreBoard.style.display = 'block'; // Puan tahtasını göster
+    // startButton.style.display = 'none'; // Zaten initial-screen içinde olduğu için gizlenecek
 
     loadCard(currentCardIndex);
-    
+        
     // Düğmelere dinleyici ekle
     optionButtons.forEach(button => {
         button.addEventListener('click', handleAnswer);
@@ -64,20 +67,18 @@ function startGame() {
 // Kartı Yükleme
 function loadCard(index) {
     if (index >= quizCards.length) {
-        // Oyun Bitti
         showEndScreen();
         return;
     }
 
-    // Kartın ön yüzüne çevir ve "flipped" sınıfını kaldır
     quizCard.classList.remove('flipped');
     
-    // Geçerli kart verisi
     const cardData = quizCards[index];
 
-    // Ön Yüz İçeriğini Güncelle
+    // Ön Yüz İçeriğini Güncelle: Resmi CSS arka planı olarak ayarla
     questionText.textContent = cardData.question;
-    cardImage.src = cardData.image; // Resim dosyasının adını set et
+    // Resim yolunu set et
+    cardFrontFace.style.backgroundImage = `url('${cardData.image}')`;
     
     // Seçenekleri Güncelle
     optionButtons.forEach(button => {
