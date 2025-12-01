@@ -140,24 +140,51 @@ h1 {
 
 /* ARKA YÜZ: Cevap ve Açıklama */
 .card-back {
+    /* Resim yüklenemezse görünecek yedek renk */
     background-color: #80cbc4;
+    
+    /* --- YENİ EKLENEN KISIM: ARKA PLAN RESMİ --- */
+    background-image: url('images/arkaplan.jpg');
+    background-size: cover; /* Resmi tüm alana yayar */
+    background-position: center; /* Resmi ortalar */
+    background-repeat: no-repeat;
+    /* ------------------------------------------ */
+
     color: #333;
     transform: rotateY(180deg);
     text-align: center;
     text-shadow: none; 
+    
+    /* İçeriğin kenarlara yapışmaması için padding */
+    padding: 20px;
 }
 
+/* "DOĞRU CEVAP" etiketini de belirginleştirelim */
 .answer-label {
-    font-size: 1em;
-    color: #004d40;
-    margin-bottom: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff; /* Yazıyı beyaz yaptık */
+    background-color: #004d40; /* Koyu yeşil şerit */
+    padding: 5px 15px;
+    border-radius: 20px;
+    display: inline-block; /* Kutu kadar yer kaplasın */
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
+/* Cevap yazısının okunabilir olması için arkasına kutu ekleyelim */
 .correct-answer-text {
     font-size: 1.6em;
     font-weight: bold;
     margin-bottom: 25px;
     color: #004d40;
+    
+    /* --- YENİ EKLENEN: OKUNABİLİRLİK KUTUSU --- */
+    background-color: rgba(255, 255, 255, 0.9); /* %90 Görünür Beyaz */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Hafif gölge */
+    /* ----------------------------------------- */
 }
 
 /* --- Düğmeler ve Mesajlar --- */
