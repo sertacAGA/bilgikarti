@@ -9,12 +9,17 @@
 <body>
     <div class="game-container">
         <h1>Bilgi Kartı Oyunu</h1>
+
+        <div id="initial-screen">
+            <img id="initial-image" src="images/opening_image.png" alt="Oyun Açılış Resmi">
+            <button id="start-button" class="start-btn" onclick="startGame()">Oyuna Başla</button>
+        </div>
+        
         <div class="score-board">Puan: <span id="score">0</span> / Kart: <span id="card-index">0</span>/26</div>
 
         <div class="card-flip-container">
             <div class="card" id="quiz-card">
-                <div class="card-face card-front">
-                    <img id="card-image" src="" alt="Soru Resmi" class="card-img">
+                <div class="card-face card-front" id="card-front-face"> 
                     <p class="question-text" id="question-text"></p>
                 </div>
                 <div class="card-face card-back">
@@ -33,8 +38,6 @@
         </div>
         
         <p id="feedback-text" class="feedback-message"></p>
-        
-        <button id="start-button" class="start-btn" onclick="startGame()">Oyuna Başla</button>
 
     </div>
 
