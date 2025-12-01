@@ -1,26 +1,20 @@
 // Kart Veri Yapısı: Tüm 26 kartınız buraya eklenecek.
-// **ÖNEMLİ:** Resim dosyalarınızın isimlerini ve doğru seçeneği buna göre güncelleyin.
+// Resim yollarının "images/" klasörünü içerdiğine dikkat edin.
 const quizCards = [
     {
         question: "Salyangozlar genellikle yağmurdan sonra neden dışarı çıkarlar?",
-        image: "images/01.png", // Resim dosyanızın adı (bu dosyayı aynı klasöre koyun)
+        image: "images/salyangoz.png", // Resim dosya yolu
         options: {
             A: "Nemli havalarda daha rahat hareket ederler.",
             B: "Yağmur kabuklarını parlatır.",
             C: "Yağmur onlara enerji verir.",
             D: "Güneşi çok sevdikleri için."
         },
-        correctAnswer: "A", // Doğru seçenek harfi
+        correctAnswer: "A", 
         answerDetail: "Nemli havalar, salyangozların kurumadan hareket etmesi ve beslenmesi için ideal ortamı sağlar. Kuru hava onlar için tehlikelidir." // Arka yüzde görünecek açıklama
     },
-    // Diğer kartlar buraya eklenecek (örnek):
-    // {
-    //     question: "Dünyanın en yüksek dağı hangisidir?",
-    //     image: "dag.png",
-    //     options: { A: "K2", B: "Everest", C: "Fuji", D: "Kilimanjaro" },
-    //     correctAnswer: "B",
-    //     answerDetail: "Everest Dağı, deniz seviyesinden 8.848,86 metre yüksekliğiyle dünyanın en yüksek zirvesidir."
-    // }
+    // Diğer 25 kart buraya eklenecek...
+    // { ... },
 ];
 
 let currentCardIndex = 0;
@@ -28,11 +22,8 @@ let score = 0;
 let isFlipping = false;
 
 // DOM Elementleri
-const cardFrontFace = document.getElementById('card-front-face');
-const initialScreen = document.getElementById('initial-screen');
 const quizCard = document.getElementById('quiz-card');
 const questionText = document.getElementById('question-text');
-const cardImage = document.getElementById('card-image');
 const optionsContainer = document.getElementById('options-container');
 const optionButtons = optionsContainer.querySelectorAll('.option-btn');
 const feedbackText = document.getElementById('feedback-text');
@@ -41,27 +32,34 @@ const cardIndexSpan = document.getElementById('card-index');
 const correctAnswerText = document.getElementById('correct-answer-text');
 const startButton = document.getElementById('start-button');
 const nextCardButton = document.querySelector('.next-card-btn');
-const cardContainer = document.querySelector('.card-flip-container');
-const scoreBoard = document.querySelector('.score-board');
+const cardFrontFace = document.getElementById('card-front-face'); 
+const initialScreen = document.getElementById('initial-screen');
+const gameArea = document.getElementById('game-area'); 
 
 
 // Oyunu Başlatma
 function startGame() {
+    if (quizCards.length === 0) {
+        alert("Oyun başlatılamadı: Hiç kart verisi yok!");
+        return;
+    }
+
     score = 0;
     currentCardIndex = 0;
     
-    // Gerekli öğeleri göster
-    initialScreen.style.display = 'none'; // Açılış ekranını gizle
-    cardContainer.style.display = 'block'; // Kartı göster
-    scoreBoard.style.display = 'block'; // Puan tahtasını göster
-    // startButton.style.display = 'none'; // Zaten initial-screen içinde olduğu için gizlenecek
+    // Açılış ekranını gizle ve oyun alanını göster
+    initialScreen.style.display = 'none'; 
+    gameArea.style.display = 'block'; 
 
     loadCard(currentCardIndex);
-        
-    // Düğmelere dinleyici ekle
-    optionButtons.forEach(button => {
-        button.addEventListener('click', handleAnswer);
-    });
+    
+    // Düğmelere dinleyici ekle (yalnızca bir kez)
+    if (optionButtons.length > 0 && !optionButtons[0].hasAttribute('data-listener-added')) {
+        optionButtons.forEach(button => {
+            button.addEventListener('click', handleAnswer);
+            button.setAttribute('data-listener-added', 'true');
+        });
+    }
 }
 
 // Kartı Yükleme
@@ -71,29 +69,29 @@ function loadCard(index) {
         return;
     }
 
+    // Kartı ön yüze çevir ve "flipped" sınıfını kaldır
     quizCard.classList.remove('flipped');
     
     const cardData = quizCards[index];
 
     // Ön Yüz İçeriğini Güncelle: Resmi CSS arka planı olarak ayarla
     questionText.textContent = cardData.question;
-    // Resim yolunu set et
-    cardFrontFace.style.backgroundImage = `url('${cardData.image}')`;
+    cardFrontFace.style.backgroundImage = `url('${cardData.image}')`; 
     
-    // Seçenekleri Güncelle
+    // Seçenekleri Güncelle ve Düğmeleri Sıfırla
     optionButtons.forEach(button => {
-        const option = button.getAttribute('data-option'); // A, B, C, D
+        const option = button.getAttribute('data-option'); 
         button.textContent = `${option}) ${cardData.options[option]}`;
         button.disabled = false; // Düğmeleri tekrar aktif et
         button.classList.remove('correct-btn', 'wrong-btn'); // Renkleri sıfırla
+        button.style.backgroundColor = ''; // CSS rengine geri döner
     });
 
     // Arka Yüz İçeriğini Güncelle
     correctAnswerText.textContent = `${cardData.correctAnswer}) ${cardData.options[cardData.correctAnswer]} - ${cardData.answerDetail}`;
     
-    // Diğer öğeleri sıfırla
-    optionsContainer.style.display = 'grid'; // Seçenekleri göster
-    nextCardButton.style.display = 'none'; // Sonraki kart düğmesini gizle
+    // Diğer öğeleri sıfırla/göster
+    nextCardButton.style.display = 'none'; 
     feedbackText.textContent = '';
     
     // Puanlama ve İlerleme Tahtasını Güncelle
@@ -103,7 +101,7 @@ function loadCard(index) {
 
 // Cevap Kontrolü
 function handleAnswer(event) {
-    if (isFlipping) return; // Kart dönerken tekrar tıklamayı engelle
+    if (isFlipping) return; 
 
     const selectedOption = event.target.getAttribute('data-option');
     const cardData = quizCards[currentCardIndex];
@@ -111,23 +109,22 @@ function handleAnswer(event) {
     
     // Tüm düğmeleri pasif hale getir
     optionButtons.forEach(button => button.disabled = true);
-    optionsContainer.style.display = 'block'; // Düğme konteynerini geçici olarak blok yap
 
     // Geri bildirim (feedback)
     if (isCorrect) {
         score++;
         feedbackText.textContent = 'Doğru! Puan kazandınız.';
         feedbackText.className = 'feedback-message correct';
-        event.target.style.backgroundColor = '#4CAF50'; // Yeşil yap
+        event.target.classList.add('correct-btn');
     } else {
         feedbackText.textContent = 'Yanlış. Kartın arka yüzünde doğru cevabı göreceksiniz.';
         feedbackText.className = 'feedback-message wrong';
-        event.target.style.backgroundColor = '#F44336'; // Kırmızı yap
+        event.target.classList.add('wrong-btn'); 
         
-        // Doğru cevabı da işaretle
+        // Doğru cevabı işaretle
         optionButtons.forEach(button => {
             if (button.getAttribute('data-option') === cardData.correctAnswer) {
-                button.style.backgroundColor = '#4CAF50';
+                button.classList.add('correct-btn');
             }
         });
     }
@@ -136,7 +133,7 @@ function handleAnswer(event) {
     isFlipping = true;
     quizCard.classList.add('flipped');
     
-    // Animasyon bitince (0.8s sonra) sonraki düğmesini göster
+    // Animasyon bitince sonraki düğmesini göster
     setTimeout(() => {
         nextCardButton.style.display = 'block';
         isFlipping = false;
@@ -146,31 +143,26 @@ function handleAnswer(event) {
 // Sonraki Karta Geçme
 function nextCard() {
     currentCardIndex++;
-    // Düğme renklerini ve stillerini sıfırla
-    optionButtons.forEach(button => {
-        button.style.backgroundColor = '#4db6ac';
-    });
     loadCard(currentCardIndex);
 }
 
 // Oyun Bitti Ekranı
 function showEndScreen() {
-    cardContainer.style.display = 'none';
-    optionsContainer.style.display = 'none';
-    nextCardButton.style.display = 'none';
-
+    gameArea.style.display = 'none';
+    
     feedbackText.textContent = `Oyun bitti! Toplam ${quizCards.length} karttan ${score} doğru cevap verdiniz.`;
     feedbackText.className = 'feedback-message correct';
     
     startButton.textContent = 'Tekrar Oyna';
     startButton.style.display = 'block';
-    startButton.onclick = startGame; // Tekrar oynama fonksiyonunu ata
+    initialScreen.style.display = 'flex'; // Tekrar oynatmak için başlangıç ekranını göster
     
-    cardIndexSpan.textContent = quizCards.length;
+    // Puan tahtasını sonuca göre güncelle
+    document.querySelector('.score-board').style.display = 'none'; 
 }
 
 // Sayfa yüklendiğinde başlangıç durumunu ayarla
 window.onload = () => {
-    // Tüm kart sayısını göster
-    document.querySelector('.score-board').innerHTML = `Puan: <span id="score">0</span> / Kart: <span id="card-index">0</span>/${quizCards.length}`;
+    // Puan tahtasındaki toplam kart sayısını göster
+    cardIndexSpan.textContent = `0/${quizCards.length}`;
 };
