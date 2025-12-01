@@ -3,7 +3,7 @@
 const quizCards = [
     {
         question: "Salyangozlar genellikle yağmurdan sonra neden dışarı çıkarlar?",
-        image: "salyangoz.png", // Resim dosyanızın adı (bu dosyayı aynı klasöre koyun)
+        image: "images/01.png", // Resim dosyanızın adı (bu dosyayı aynı klasöre koyun)
         options: {
             A: "Nemli havalarda daha rahat hareket ederler.",
             B: "Yağmur kabuklarını parlatır.",
