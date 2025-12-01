@@ -111,8 +111,16 @@ function handleAnswer(event) {
     optionButtons.forEach(button => button.disabled = true);
 
     // Geri bildirim (feedback)
+// Cevap Kontrolü
+function handleAnswer(event) {
+    // ... (kodun başı aynı)
+
+    // Geri bildirim (feedback)
     if (isCorrect) {
         score++;
+        // ------------------------------------------------------------------
+        scoreSpan.textContent = score; // ✅ BU SATIRI EKLEMELİSİNİZ!
+        // ------------------------------------------------------------------
         feedbackText.textContent = 'Doğru! Puan kazandınız.';
         feedbackText.className = 'feedback-message correct';
         event.target.classList.add('correct-btn');
