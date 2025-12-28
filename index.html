@@ -10,10 +10,18 @@
     <div class="game-container">
         <h1>Bilgi Kartı Oyunu</h1>
 
-        <div id="initial-screen">
-            <img id="initial-image" src="images/opening_image.png" alt="Oyun Açılış Resmi">
-            <button id="start-button" class="start-btn" onclick="startGame()">Oyuna Başla</button>
-        </div>
+<div id="initial-screen">
+    <img id="initial-image" src="images/opening_image.png" alt="Oyun Açılış Resmi">
+    
+    <div class="language-selection">
+        <button class="lang-btn active" onclick="setLanguage('tr')">🇹🇷 Türkçe</button>
+        <button class="lang-btn" onclick="setLanguage('en')">🇬🇧 English</button>
+    </div>
+
+    <h2 id="welcome-text" style="margin:10px 0; color:#555;">Hoş Geldiniz / Welcome</h2>
+    
+    <button id="start-button" class="start-btn" onclick="startGame()">Oyuna Başla</button>
+</div>
         
         <div id="game-area"> 
             
