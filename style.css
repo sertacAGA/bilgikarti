@@ -259,4 +259,46 @@ h1 {
 /* Oyun Alanı Başlangıçta Gizli */
 #game-area {
     display: none;
+
+    /* style.css dosyasının en altına ekle */
+
+/* Dil Seçimi Alanı */
+.language-selection {
+    margin: 20px 0;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.lang-btn {
+    padding: 10px 20px;
+    border: 2px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s;
+    font-weight: bold;
+    opacity: 0.6;
+}
+
+.lang-btn.active, .lang-btn:hover {
+    border-color: #ff9800;
+    background-color: #fff3e0;
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* Kartın arka planını biraz daha okunaklı yapalım */
+.card-front {
+    /* Yazıların resim üzerinde daha iyi okunması için hafif bir karartma */
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.5); 
+}
+
+/* Soru metnini biraz daha güzelleştir */
+.question-text {
+    background-color: rgba(255, 255, 255, 0.95); /* Siyah yerine Beyaz zemin */
+    color: #333; /* Koyu yazı */
+    border: 2px solid #ff9800;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
