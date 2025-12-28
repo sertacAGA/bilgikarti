@@ -553,8 +553,20 @@ function handleAnswer(event) {
 }
 
 function nextCard() {
-    currentCardIndex++;
-    loadCard(currentCardIndex);
+    // 1. Önce "Sonraki Kart" butonunu gizleyelim ki üst üste basılmasın
+    nextCardButton.style.display = 'none';
+
+    // 2. Kartı hemen tersine (ön yüzüne) çevirmeye başla
+    // Bu aşamada henüz index'i arttırmıyoruz, yani eski cevap kartın arkasında duruyor.
+    quizCard.classList.remove('flipped');
+
+    // 3. Verileri yüklemek için kartın dönmesini bekle
+    // CSS'te dönüş süresi 0.8s idi. Biz 0.6s (600ms) bekleyip öyle değiştirelim.
+    // Böylece kart neredeyse kapandığında soru değişecek.
+    setTimeout(() => {
+        currentCardIndex++;
+        loadCard(currentCardIndex);
+    }, 600); 
 }
 
 function showEndScreen() {
